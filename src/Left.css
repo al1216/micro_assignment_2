@@ -1,0 +1,21 @@
+.left-box {
+    color: #FFFFFF;
+    padding: 12%;
+}
+
+.heading-left {
+    font-size: 3.5rem;
+    font-weight: 900;
+    font-size: 35px;
+    line-height: 99.19%;
+    letter-spacing: 0.025em;
+    padding-right: 19%;
+}
+
+.para-left {
+    font-size: 1.4rem;
+    line-height: 99.19%;
+    letter-spacing: 0.018em;
+    font-weight: normal;
+    padding-right: 12rem;
+}
