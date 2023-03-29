@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Form.css";
 
 function Form() {
@@ -6,11 +6,54 @@ function Form() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [myArr, setArr] = useState([]);
+  let [status, setStatus] = useState(false);
+  let [para,setPara] = useState("Try it free 7 days then ₹180/mo. thereafter");
+
+  let arr = ["HTML", "CSS", "JS", "REACT"];
+
+  let deleteSkill = (value) => {
+    setArr((oldValues) => {
+      return oldValues.filter((skill) => skill !== value);
+    });
+  };
+
+  function changeButtonState() {
+    if (
+      name.trim().length > 0 &&
+      email.trim().length > 0 &&
+      password.length > 0 &&
+      myArr.length >= 1
+    ) {
+      setStatus(true);
+      console.log(true);
+    }
+  }
+
+  function resetForm() {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setArr([]);
+    setStatus(false);
+    setPara("You have successfully subscribed to our plan ✓");
+  }
+
+  useEffect(() => {
+    if (name.length > 0 && email.length > 0 && password.length > 0 && myArr.length >= 1) {
+      setStatus(true);
+    } else {
+      setStatus(false);
+    }
+  }, [name.length, email.length, password.length, myArr.length]);
   return (
     <>
+      <div className="holder">
+        <p className="para-right">{para}</p>
+      </div>
       <div className="form">
         <div className="input-fields">
           <input
+            autoFocus="true"
             type="text"
             className="name"
             placeholder="Your Name"
@@ -36,28 +79,38 @@ function Form() {
             className="skills"
             onChange={(e) => {
               let temp = e.target.value;
-              if (!myArr.includes(temp)) setArr((arr) => [...arr, temp]);
+              if (temp.trim().length > 0 && !myArr.includes(temp)) setArr((arr) => [...arr, temp]);
             }}
+            
           >
-            <option value="" selected disabled>
-              Choose your skills
-            </option>
-            <option value="HTML">HTML</option>
-            <option value="CSS">CSS</option>
-            <option value="JS">JS</option>
-            <option value="REACT">REACT</option>
+            <option value="" selected>Choose your skills</option>
+            {arr.map((skill) => (
+              <>
+                <option value={skill}>{skill}</option>
+              </>
+            ))}
           </select>
+
           <div className="skills-selected">
-            <div className="skill">
-              <p className="skill-para">HTML</p>
-              <p className="cross">X</p>
-            </div>
-            <div className="skill">
-              <p className="skill-para">HTML</p>
-              <p className="cross">X</p>
-            </div>
+            {myArr.map((skill) => (
+              <>
+                <div className="skill">
+                  <p key={skill} className="skill-para">
+                    {skill}
+                  </p>
+                  <p className="cross" onClick={() => deleteSkill(skill)}>
+                    X
+                  </p>
+                </div>
+              </>
+            ))}
           </div>
-          <button disabled="disabled" className="btn">
+          <button
+            className="btn"
+            onChange={changeButtonState}
+            disabled={!status}
+            onClick={resetForm}
+          >
             CLAIM YOUR FREE TRIAL
           </button>
         </div>

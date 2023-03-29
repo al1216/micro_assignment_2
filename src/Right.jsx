@@ -1,6 +1,6 @@
 import React from "react";
 import './Right.css';
-import Card from "./Card.jsx";
+// import Card from "./Card.jsx";
 import Form from "./Form.jsx";
 
 function Right() {
@@ -8,7 +8,6 @@ function Right() {
   return (
     <>
       <div className="right-box">
-        <Card />
         <Form />
       </div>
     </>
